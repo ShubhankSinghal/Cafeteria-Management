@@ -8,7 +8,7 @@ development:
   host: localhost
   user: postgres
   password: 123456789
-  database: saas_db
+  database: capstone_db
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -18,8 +18,8 @@ test:
   host: localhost
   user: postgres
   password: 123456789
-  database: test_saas_db
+  database: test_capstone_db
 
 production:
   <<: *default
-  database: prod_saas_db
+  database: prod_capstone_db
