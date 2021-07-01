@@ -2,15 +2,60 @@
 <html>
   <head>
     <title>CafeteriaManagement</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
+    <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
   </head>
 
   <body>
+
+    <nav class="navbar navbar-inverse navbar-expand-lg bg-dark" role="navigation-demo">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="/"><span style="font-size: 32px;">Cafeteria</span></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="#pablo" class="nav-link">
+                <i class="material-icons">explore</i>
+                Discover
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#pablo" class="nav-link">
+                Wishlist
+              </a>
+            </li>
+            <li class="nav-item">
+              <div class="btn btn-rose btn-raised btn-round " data-toggle="dropdown">
+                <span><a href="" style="color: inherit;">Register</a></span> /
+                <span><a href="signin" style="color: inherit;">Login</a></span>
+              </div>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-->
+    </nav>
+
+
+
+
     <% if @current_user %>
       <p class="UserHeader">
         Welcome <%= @current_user.first_name %>
@@ -18,10 +63,20 @@
       </p>
     <% end %>
     <% if flash[:error] %>
-      <p class="Flash-error">
-        <%= flash[:error] %>
-      </p>
+      <div class="alert alert-danger">
+        <div class="container">
+          <div class="alert-icon">
+            <i class="material-icons">error_outline</i>
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true"><i class="material-icons">clear</i></span>
+          </button>
+          <b>Error Alert: </b> <%= flash[:error] %>
+        </div>
+      </div>
+      <div class="clearfix"></div>
     <% end %>
     <%= yield %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   </body>
 </html>
