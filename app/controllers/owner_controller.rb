@@ -1,4 +1,6 @@
 class OwnerController < ApplicationController
+  before_action :authenticate_user
+
   def index
     @todos = current_user.todos
     render "index"

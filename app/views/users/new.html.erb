@@ -1,5 +1,5 @@
 <div class="signup-page sidebar-collapse">
-<div class="page-header header-filter login-background" filter-color="purple">
+<div class="page-header header-filter login-background">
     <div class="container">
       <div class="row">
         <div class="col-md-10 ml-auto mr-auto">
@@ -13,20 +13,20 @@
                       <i class="material-icons">timeline</i>
                     </div>
                     <div class="description">
-                      <h4 class="info-title">Marketing</h4>
+                      <h4 class="info-title">Your vehicle, your time</h4>
                       <p class="description">
-                        We've created the marketing campaign of the website. It was a very interesting collaboration.
+                        Grab your car, bike, scooter, or even shoes and deliver whenever you want—for an hour, a weekend, or throughout the week.
                       </p>
                     </div>
                   </div>
                   <div class="info info-horizontal">
                     <div class="icon icon-primary">
-                      <i class="material-icons">code</i>
+                      <i class="material-icons">payments</i>
                     </div>
                     <div class="description">
-                      <h4 class="info-title">Fully Coded in HTML5</h4>
+                      <h4 class="info-title">Weekly payments</h4>
                       <p class="description">
-                        We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.
+                        Get paid once a week and easily keep track of money you've made within the driver app.
                       </p>
                     </div>
                   </div>
@@ -35,9 +35,9 @@
                       <i class="material-icons">group</i>
                     </div>
                     <div class="description">
-                      <h4 class="info-title">Built Audience</h4>
+                      <h4 class="info-title">Enjoy your city</h4>
                       <p class="description">
-                        There is also a Fully Customizable CMS Admin Dashboard for this product.
+                        Between picking up and dropping off deliveries, it’s just you and the road—relax, bump your music, and enjoy cruising around town.
                       </p>
                     </div>
                   </div>
@@ -110,7 +110,11 @@
                       <%= form.submit "Get Started", class: "btn btn-primary btn-round" %>
                     </div>
                     <% end %>
-                  </form>
+                  </div>
+                <br/>
+                <div class="text-center">Already have an account?
+                    <%= link_to :"Sign in here!", new_sessions_path%>
+                </div>
                 </div>
               </div>
             </div>

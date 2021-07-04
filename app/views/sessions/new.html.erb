@@ -1,58 +1,62 @@
 <div class="login-page sidebar-collapse">
-<div class="page-header header-filter login-background">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-        <div class="form">
-        <%= form_with url: sessions_path do |form| %>
-          <div class="card card-login card-hidden">
-            <div class="card-header card-header-primary text-center">
-              <h4 class="card-title">Login</h4>
-              <div class="social-line">
-                <a href="#futureWork" class="btn btn-just-icon btn-link btn-white">
-                  <i class="fa fa-facebook-square"></i>
-                </a>
-                <a href="#futureWork" class="btn btn-just-icon btn-link btn-white">
-                  <i class="fa fa-twitter"></i>
-                </a>
-                <a href="#futureWork" class="btn btn-just-icon btn-link btn-white">
-                  <i class="fa fa-google-plus"></i>
-                </a>
+  <div class="page-header header-filter login-background">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
+          <div class="form">
+            <%= form_with url: sessions_path do |form| %>
+              <div class="card card-login card-hidden">
+                <div class="card-header card-header-primary text-center">
+                  <h4 class="card-title">Login</h4>
+                  <div class="social-line">
+                    <a href="#futureWork" class="btn btn-just-icon btn-link btn-white">
+                      <i class="fa fa-facebook-square"></i>
+                    </a>
+                    <a href="#futureWork" class="btn btn-just-icon btn-link btn-white">
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#futureWork" class="btn btn-just-icon btn-link btn-white">
+                      <i class="fa fa-google-plus"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="card-body ">
+                  <p class="card-description text-center">Or Be Classical</p>
+                  <span class="bmd-form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">email</i>
+                        </span>
+                      </div>
+                      <%= form.email_field :email, class: "form-control", autofocus: true, placeholder: "Email..." %>
+                    </div>
+                  </span>
+
+                  <span class="bmd-form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="material-icons">lock_outline</i>
+                        </span>
+                      </div>
+                      <%= form.password_field :password, class: "form-control", placeholder: "Password..." %>
+                    </div>
+                  </span>
+
+                  <div class="card-footer justify-content-center">
+                    <%= form.submit "Lets Go", class: "btn btn-rose btn-round" %>
+                  </div>
+
+                  <div class="card-footer justify-content-center">New User?
+                    <%= link_to :"Sign up here!", new_user_path %>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="card-body ">
-              <p class="card-description text-center">Or Be Classical</p>
-
-              <span class="bmd-form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">email</i>
-                    </span>
-                  </div>
-                  <%= form.email_field :email, class: "form-control", autofocus: true, placeholder: "Email..." %>
-                </div>
-              </span>
-
-              <span class="bmd-form-group">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      <i class="material-icons">lock_outline</i>
-                    </span>
-                  </div>
-                  <%= form.password_field :password, class: "form-control", placeholder: "Password..." %>
-                </div>
-              </span>
-            </div>
-            <div class="card-footer justify-content-center">
-              <%= form.submit "Lets Go", class: "btn btn-rose btn-link btn-lg" %>
-            </div>
+            <% end %>
           </div>
         </div>
-        <% end %>
       </div>
     </div>
   </div>
-</div>
 </div>

@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,56 +15,57 @@
     <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
   </head>
 
-  <body>
+  <body class="index-page sidebar-collapse">
 
-    <nav class="navbar navbar-inverse navbar-expand-lg bg-dark" role="navigation-demo">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-translate">
-            <a class="navbar-brand" href="/"><span style="font-size: 32px;">Cafeteria</span></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span>
-            <span class="navbar-toggler-icon"></span>
-            <span class="navbar-toggler-icon"></span>
-          </button>
+    <div class="header-3">
+      <nav class="navbar navbar-transparent navbar-absolute navbar-expand-lg">
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-translate">
+            <a class="navbar-brand" href="/">
+              <span style="font-size: 32px;">
+                <span style="color:#000;">Uber</span>
+                <span style="color:#0F0;">Eats</span>
+              </span>
+            </a>
+            <button type="button" class="ml-auto navbar-toggler" data-toggle="collapse" data-target="#navigation-example3">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="navbar-toggler-icon"></span>
+              <span class="navbar-toggler-icon"></span>
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div class="collapse navbar-collapse" id="navigation-example3">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a href="#pablo" class="nav-link">
+                  <i class="material-icons">account_balance</i> About Us
+                </a>
+              </li>
+              <% if @current_user %>
+                Welcome <%= @current_user.first_name %>
+                <li class="button-container nav-link iframe-extern">
+                  <%= link_to "Sign-out", destroy_session_path, method: "delete", class: "btn  btn-rose btn-round btn-block" %>
+                </li>
+              <% else %>
+              <li class="button-container nav-link iframe-extern">
+                <a href="/signin" class="btn  btn-rose btn-round btn-block">
+                  <i class="material-icons">fingerprint</i> Login
+                </a>
+              </li>
+              <li class="button-container nav-link iframe-extern">
+                <a href="/shopping" class="btn btn-rose btn-round btn-block">
+                  <i class="material-icons">shopping_cart</i> Buy Now
+                </a>
+              </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a href="#pablo" class="nav-link">
-                <i class="material-icons">explore</i>
-                Discover
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#pablo" class="nav-link">
-                Wishlist
-              </a>
-            </li>
-            <li class="nav-item">
-              <div class="btn btn-rose btn-raised btn-round " data-toggle="dropdown">
-                <span><a href="" style="color: inherit;">Register</a></span> /
-                <span><a href="signin" style="color: inherit;">Login</a></span>
-              </div>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-->
-    </nav>
+      </nav>
 
-
-
-
-    <% if @current_user %>
-      <p class="UserHeader">
-        Welcome <%= @current_user.first_name %>
-        <%= link_to "Sign-out", destroy_session_path, method: "delete" %>
-      </p>
-    <% end %>
     <% if flash[:error] %>
-      <div class="alert alert-danger">
+      <div class="alert alert-danger fixed-bottom">
         <div class="container">
           <div class="alert-icon">
             <i class="material-icons">error_outline</i>
@@ -76,7 +78,128 @@
       </div>
       <div class="clearfix"></div>
     <% end %>
+
+
     <%= yield %>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+    <footer class="footer footer-black footer-big">
+      <div class="container">
+        <div class="content">
+          <div class="row">
+            <div class="col-md-3">
+              <a href="/" class="copyright pull-center">
+                <span style="font-size: 32px;">
+                  <span style="color:#FFF;">Uber</span>
+                  <span style="color:#0F0;">Eats</span>
+                </span>
+              </a>
+            </div>
+            <div class="col-md-3">
+              <h5>About Uber Eats</h5>
+              <ul class="links-vertical">
+                <li>
+                  <a href="#futureWork">
+                    Read our Blog
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Buy Gift Cards
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Create a business account
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Add your restaurant
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Sign up to deliver
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <h5>Get Help</h5>
+              <ul class="links-vertical">
+                <li>
+                  <a href="#futureWork">
+                    View all cities
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    View all countries
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Restaurant near me
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Save on your first order
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    English
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-md-3">
+              <h5>Follow Us</h5>
+              <ul class="social-buttons">
+                <li>
+                  <a href="#futureWork" class="btn btn-just-icon btn-link btn-twitter">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork" class="btn btn-just-icon btn-link btn-facebook">
+                    <i class="fa fa-facebook-square"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork" class="btn btn-just-icon btn-link btn-instagram">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                </li>
+              </ul>
+              <ul class="links-vertical">
+                <li>
+                  <a href="#futureWork">
+                    Privacy Policies
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Terms
+                  </a>
+                </li>
+                <li>
+                  <a href="#futureWork">
+                    Pricing
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="copyright pull-center">
+          Copyright &#xA9; Shubhank Singhal All Rights Reserved.
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

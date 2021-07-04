@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :ensure_user_logged_in
+  before_action :sign_page
 
   def new
   end

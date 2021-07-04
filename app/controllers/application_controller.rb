@@ -1,11 +1,17 @@
 class ApplicationController < ActionController::Base
-  before_action :ensure_user_logged_in
 
-  def ensure_user_logged_in
+  def authenticate_user
     unless current_user
-      redirect_to "/"
+      redirect_to "/", notice: "Please Login to view that page!" if request.original_fullpath != "/"
     end
   end
+
+  def sign_page
+    if current_user
+      redirect_to "/", notice: "You are already logged in!" if request.original_fullpath != "/"
+    end
+  end
+
 
   def current_user
     return @current_user if @current_user
