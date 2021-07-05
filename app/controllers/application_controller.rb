@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   def authenticate_user
     unless current_user
       redirect_to "/", notice: "Please Login to view that page!" if request.original_fullpath != "/"
@@ -12,7 +11,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def current_user
     return @current_user if @current_user
 
@@ -20,7 +18,7 @@ class ApplicationController < ActionController::Base
     if @current_user_id
       @current_user = User.find(@current_user_id)
     else
-      nil
+      @current_user = nil
     end
   end
 end

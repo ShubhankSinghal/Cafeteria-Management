@@ -8,6 +8,6 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def to_pleasant_string
-    "#{id}. #{name.to_s} #{email} #{password}"
+    "#{id}. #{first_name.to_s} #{email} #{password}"
   end
 end
