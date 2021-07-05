@@ -1,4 +1,4 @@
-class OrderItem < ActiveRecord::Base
+class OrderItems < ActiveRecord::Base
   belongs_to :order
   belongs_to :menu_item
 end
