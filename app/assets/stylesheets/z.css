@@ -9,3 +9,15 @@
   background-size: cover;
   background-position: top center;
 }
+
+.home1-background {
+  background-image: url("home.png");
+  background-size: cover;
+  background-position: top center;
+}
+
+.shopping-background {
+  background-image: url("shopping.png");
+  background-size: cover;
+  background-position: top center;
+}

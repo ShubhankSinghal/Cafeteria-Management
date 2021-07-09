@@ -3,9 +3,14 @@ class HomeController < ApplicationController
 
   def index
     if @current_user
-      redirect_to menu_index_path
+      render "home"
     else
       render "index"
     end
+  end
+
+  def destroy
+    session[:current_user_id] = nil
+    redirect_to "/"
   end
 end
