@@ -40,32 +40,29 @@
           </div>
           <div class="collapse navbar-collapse" id="topNav">
             <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a href="/AboutUs" class="nav-link">
+                  <i class="material-icons">account_balance</i> About Us
+                </a>
+              </li>
               <% if @current_user %>
-                <li class="button-container nav-link iframe-extern">
-                  <a href="/shopping" class="btn btn-rose btn-round btn-block">
-                    <i class="material-icons">shopping_cart</i> Buy Now
-                  </a>
-                </li>
+                <% if request.original_fullpath == "/menu" %>
+                  <li class="button-container nav-link iframe-extern">
+                    <a href="/shopping" class="btn btn-rose btn-round btn-block">
+                      <i class="material-icons">shopping_cart</i> Checkout
+                    </a>
+                  </li>
+                <% end %>
                 <li class="button-container nav-link iframe-extern">
                   <%= link_to "Sign-out", destroy_session_path, method: "delete", class: "btn  btn-rose btn-round btn-block" %>
                 </li>
               <% elsif request.original_fullpath == "/users/new" %>
-                <li class="nav-item">
-                  <a href="/AboutUs" class="nav-link">
-                    <i class="material-icons">account_balance</i> About Us
-                  </a>
-                </li>
                 <li class="button-container nav-link iframe-extern">
                   <a href="/signin" class="btn  btn-rose btn-round btn-block">
                     <i class="material-icons">fingerprint</i> Login
                   </a>
                 </li>
               <% else %>
-                <li class="nav-item">
-                <a href="/AboutUs" class="nav-link">
-                  <i class="material-icons">account_balance</i> About Us
-                </a>
-              </li>
                 <li class="button-container nav-link iframe-extern">
                   <a href="/users/new" class="btn  btn-rose btn-round btn-block">
                     <i class="material-icons">fingerprint</i> Register
