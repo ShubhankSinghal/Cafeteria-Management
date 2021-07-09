@@ -9,6 +9,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def about
+    render "about"
+  end
+
   def destroy
     session[:current_user_id] = nil
     redirect_to "/"

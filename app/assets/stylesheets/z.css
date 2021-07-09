@@ -21,3 +21,21 @@
   background-size: cover;
   background-position: top center;
 }
+
+.about-background {
+  background-image: url("about.jpg");
+  background-size: cover;
+  background-position: top center;
+}
+
+.teammate1 {
+  content: url("teammate1.png");
+}
+
+.teammate2 {
+  content: url("teammate2.png");
+}
+
+.profile {
+  content: url("profile.png");
+}
