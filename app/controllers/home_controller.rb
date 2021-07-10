@@ -3,7 +3,11 @@ class HomeController < ApplicationController
 
   def index
     if @current_user
-      render "home"
+      if @current_user.role == "owner"
+        redirect_to admin_index_path
+      else
+        render "home"
+      end
     else
       render "index"
     end

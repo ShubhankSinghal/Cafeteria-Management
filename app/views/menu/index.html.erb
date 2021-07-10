@@ -51,22 +51,22 @@
               <div class="col-md-3 border-left">
                 <h4 class="card-title text-center">Shopping Cart</h4>
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table table-shopping">
                     <thead>
                       <tr>
-                        <th>Item-Name</th>
-                        <th>Qunatity</th>
-                        <th>Total Amount</th>
+                        <th class="col-md-4">Item-Name</th>
+                        <th class="col-md-2">Quantity</th>
+                        <th class="col-md-6" colspan="2">Total Amount</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr class="text-center">
-                        <td class="col-md-5">Shahi Paneer</td>
+                        <td class="col-md-4">Shahi Paneer</td>
                         <td class="col-md-2">4</td>
                         <td class="col-md-4"><small>&#8377;</small>
                           1000
                         </td>
-                        <td class="col-md-1">
+                        <td class="col-md-2">
                           <%= form_with(url: "/", method: "delete") do %>
                             <button type="submit" class="btn btn-link">
                               <i class="material-icons">close</i>
@@ -83,6 +83,7 @@
                         <td class="text-left">
                           &#8377;10000
                         </td>
+                        <td></td>
                       </tr>
                     </tfoot>
                   </table>

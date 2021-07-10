@@ -21,4 +21,14 @@ class ApplicationController < ActionController::Base
       @current_user = nil
     end
   end
+
+  def admin
+    return @current_user.role == "owner"
+  end
+
+  def check_admin
+    unless current_user and admin
+      redirect_to "/", notice: "You are not ADMIN" if request.original_fullpath != "/"
+    end
+  end
 end

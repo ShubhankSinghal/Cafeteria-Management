@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    render plain: User.order("id").map { |user| user.to_pleasant_string }
+    render plain: User.order("id").map { |user| user }
   end
 
   def show
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
       last_name: params[:last_name],
       email: params[:email],
       password: params[:password],
-      role: params[:role]
+      role: 2,
     )
     if user.save
       session[:current_user_id] = user.id
@@ -31,5 +31,4 @@ class UsersController < ApplicationController
       redirect_to "/users/new"
     end
   end
-
 end

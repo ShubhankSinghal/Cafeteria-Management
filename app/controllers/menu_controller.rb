@@ -8,4 +8,8 @@ class MenuController < ApplicationController
   def shopping
     render "shopping"
   end
+
+  def history
+    render "history"
+  end
 end

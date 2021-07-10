@@ -1,0 +1,61 @@
+<div class="shopping-cart sidebar-collapse">
+  <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue">
+    <div class="container-fluid">
+      <br/><br/>
+      <div class="main main-raised">
+        <div class="card card-plain">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-10 col-md-10 ml-auto mr-auto">
+                <h1 class="card-title text-center">Users</h1>
+                <% arr = ["owner", "clerk", "customer"] %>
+                <% for x in arr %>
+                  <h4 class="text-center"><small><%= x.upcase %></small></h4>
+
+                  <% users = User.where(:role => x) %>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr class="text-center">
+                          <th>ID</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Email</th>
+                          <th>Since</th>
+                          <th class="text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <% users.each do |user| %>
+                        <tr class="text-center">
+                          <td><%= user.id %></td>
+                          <td><%= user.first_name %></td>
+                          <td><%= user.last_name %></td>
+                          <td><%= user.email %></td>
+                          <td><%= user.created_at.to_s(:short) %></td>
+                          <td class="td-actions text-right">
+                            <a href="#show/<%= user.id %>" rel="tooltip" class="btn btn-info btn-link btn-just-icon btn-sm">
+                              <i class="material-icons">person</i>
+                            </a>
+                            <a href="/change/<%= user.id %>" rel="tooltip" class="btn btn-success btn-link btn-just-icon btn-sm">
+                              <i class="material-icons">edit</i>
+                            </a>
+                          </td>
+                        </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                  <hr/>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<li class="btn btn-link nav-link">
+  <%= link_to "Add new user", "new", method: "get", class: "btn  btn-rose btn-round btn-block" %>
+</li>
