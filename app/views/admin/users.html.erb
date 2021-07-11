@@ -1,20 +1,21 @@
 <div class="shopping-cart sidebar-collapse">
-  <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue">
-    <div class="container-fluid">
-      <br/><br/>
+<div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
+    </div>
       <div class="main main-raised">
         <div class="card card-plain">
           <div class="card-body">
-            <div class="row">
-              <div class="col-lg-10 col-md-10 ml-auto mr-auto">
-                <h1 class="card-title text-center">Users</h1>
+            <div class="row justify-content-center">
+              <div class="col-lg-10 col-md-10">
+              <br>
+              <h1 class="card-title text-center">Users</h1>
+
                 <% arr = ["owner", "clerk", "customer"] %>
                 <% for x in arr %>
-                  <h4 class="text-center"><small><%= x.upcase %></small></h4>
-
                   <% users = User.where(:role => x) %>
-                  <div class="table-responsive">
-                    <table class="table">
+
+                <div class="table-responsive">
+                  <h4 class="text-center"><small><%= x.upcase %></small></h4>
+                    <table class="table table-shopping">
                       <thead>
                         <tr class="text-center">
                           <th>ID</th>

@@ -48,6 +48,10 @@ class AdminController < ApplicationController
     redirect_to "/list"
   end
 
+  def menu
+    render "menu"
+  end
+
   def destroy
     id = params[:id]
     user = User.find(id)

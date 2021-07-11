@@ -9,10 +9,11 @@ Rails.application.routes.draw do
   get "/shopping" => "menu#shopping"
   get "/history" => "menu#history"
 
-  resources :admin
   get "/list" => "admin#list"
   get "/change/:id" => "admin#change"
   get "/new" => "admin#new"
+  get "/admin/menu" => "admin#menu"
+  resources :admin
 
   resources :users
   get "/signin" => "sessions#new", as: :new_sessions

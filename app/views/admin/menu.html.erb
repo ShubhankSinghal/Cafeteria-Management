@@ -1,12 +1,13 @@
 <div class="shopping-cart sidebar-collapse">
-  <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
+<div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
     </div>
       <div class="main main-raised">
         <div class="card card-plain">
           <div class="card-body">
-            <div class="row">
-              <div class="col-md-9">
-                <h3 class="card-title text-center">Menu</h3>
+            <div class="row justify-content-center">
+              <div class="col-md-10">
+              <br>
+                <h1 class="card-title text-center">Menu</h1>
                 <div class="table-responsive">
                   <table class="table table-shopping">
                     <thead>
@@ -45,47 +46,6 @@
                         </td>
                       </tr>
                     </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="col-md-3 border-left">
-                <h4 class="card-title text-center">Shopping Cart</h4>
-                <div class="table-responsive">
-                  <table class="table table-shopping">
-                    <thead>
-                      <tr>
-                        <th class="col-md-4">Item-Name</th>
-                        <th class="col-md-2">Quantity</th>
-                        <th class="col-md-6" colspan="2">Total Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="text-center">
-                        <td class="col-md-4">Shahi Paneer</td>
-                        <td class="col-md-2">4</td>
-                        <td class="col-md-4"><small>&#8377;</small>
-                          1000
-                        </td>
-                        <td class="col-md-2">
-                          <%= form_with(url: "/", method: "delete") do %>
-                            <button type="submit" class="btn btn-link">
-                              <i class="material-icons">close</i>
-                            </button>
-                          <% end %>
-                        </td>
-                      </tr>
-                    </tbody>
-                    <tfoot class="card-title">
-                      <tr>
-                        <td colspan="2" class="text-right">
-                          Total Amount =
-                        </td>
-                        <td class="text-left">
-                          &#8377;10000
-                        </td>
-                        <td></td>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
