@@ -5,10 +5,6 @@ class MenuController < ApplicationController
     render "index"
   end
 
-  def shopping
-    render "shopping"
-  end
-
   def history
     render "history"
   end

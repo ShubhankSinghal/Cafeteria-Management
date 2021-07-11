@@ -35,9 +35,6 @@
                           <td><%= user.email %></td>
                           <td><%= user.created_at.to_s(:short) %></td>
                           <td class="td-actions text-right">
-                            <a href="#show/<%= user.id %>" rel="tooltip" class="btn btn-info btn-link btn-just-icon btn-sm">
-                              <i class="material-icons">person</i>
-                            </a>
                             <a href="/change/<%= user.id %>" rel="tooltip" class="btn btn-success btn-link btn-just-icon btn-sm">
                               <i class="material-icons">edit</i>
                             </a>

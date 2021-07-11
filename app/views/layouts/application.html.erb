@@ -8,9 +8,6 @@
   	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-
-
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -20,16 +17,15 @@
   </head>
 
   <body class="index-page sidebar-collapse">
-
     <div class="header-3">
       <nav class="navbar navbar-transparent navbar-absolute navbar-expand-lg">
         <div class="container">
-          <!-- Brand and toggle get grouped for better mobile display -->
+
           <div class="navbar-translate">
             <a class="navbar-brand" href="/">
-              <span style="font-size: 32px;">
-                <span style="color:#000;">Uber</span>
-                <span style="color:#0F0;">Eats</span>
+              <span style="font-size: 32px;" class="title">
+                <span style="color:#F00;">Cafe</span>
+                <span style="color:#0F0;">teria</span>
               </span>
             </a>
 
@@ -40,178 +36,153 @@
               <span class="navbar-toggler-icon"></span>
             </button>
           </div>
+
           <div class="collapse navbar-collapse" id="topNav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a href="/AboutUs" class="nav-link">
-                  <i class="material-icons">account_balance</i> About Us
-                </a>
+
+              <li class="nav-link">
+                <%= link_to "About Us", aboutus_path, method: "get", class: "btn  btn-rose btn-round btn-block" %>
               </li>
+
               <% if @current_user %>
-                <% if request.original_fullpath == "/menu" %>
+
+                <% if request.original_fullpath == menu_index_path %>
                   <li class="button-container nav-link iframe-extern">
-                    <a href="/shopping" class="btn btn-rose btn-round btn-block">
-                      <i class="material-icons">shopping_cart</i> Checkout
-                    </a>
+                    <%= link_to "Checkout", "/checkout", method: "get", class: "btn  btn-rose btn-round btn-block" %>
                   </li>
                 <% end %>
+
                 <li class="button-container nav-link iframe-extern">
                   <%= link_to "Sign-out", destroy_session_path, method: "delete", class: "btn  btn-rose btn-round btn-block" %>
                 </li>
-              <% elsif request.original_fullpath == "/users/new" %>
+
+              <% elsif request.original_fullpath == new_user_path %>
+
                 <li class="button-container nav-link iframe-extern">
-                  <a href="/signin" class="btn  btn-rose btn-round btn-block">
-                    <i class="material-icons">fingerprint</i> Login
-                  </a>
+                    <%= link_to "Login", new_sessions_path, method: "get", class: "btn  btn-rose btn-round btn-block" %>
                 </li>
+
               <% else %>
+
                 <li class="button-container nav-link iframe-extern">
-                  <a href="/users/new" class="btn  btn-rose btn-round btn-block">
-                    <i class="material-icons">fingerprint</i> Register
-                  </a>
+                  <%= link_to "Register", users_path, method: "get", class: "btn  btn-rose btn-round btn-block" %>
                 </li>
+
               <% end %>
             </ul>
           </div>
         </div>
       </nav>
 
-    <% if flash[:error] %>
-      <div class="alert alert-danger fixed-bottom">
+      <% if flash[:error] %>
+        <div class="alert alert-danger fixed-bottom">
+          <div class="container">
+            <div class="alert-icon">
+              <i class="material-icons">error_outline</i>
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"><i class="material-icons">clear</i></span>
+            </button>
+            <b>Error Alert: </b> <%= flash[:error] %>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      <% end %>
+
+      <%= yield %>
+
+      <footer class="footer footer-black footer-big">
         <div class="container">
-          <div class="alert-icon">
-            <i class="material-icons">error_outline</i>
-          </div>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true"><i class="material-icons">clear</i></span>
-          </button>
-          <b>Error Alert: </b> <%= flash[:error] %>
-        </div>
-      </div>
-      <div class="clearfix"></div>
-    <% end %>
+          <div class="content">
+            <div class="row">
+              <div class="col-md-3">
+                <a href="/" class="copyright pull-center">
+                  <span style="font-size: 32px;" class="title">
+                    <span style="color:#F00;">Cafe</span>
+                    <span style="color:#0F0;">teria</span>
+                  </span>
+                </a>
+              </div>
+              <div class="col-md-3">
+                <h5>About Cafeteria</h5>
+                <ul class="links-vertical">
+                  <li>
+                     <%= link_to "Read our Blog", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Buy Gifts Cards", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Create a business account", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Add your Restaurant", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Sign up to deliver", "#futureWork" %>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-md-3">
+                <h5>Get Help</h5>
+                <ul class="links-vertical">
+                  <li>
+                    <%= link_to "View all cities", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "View all countries", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Restaurant near me", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Save on your first order", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "English", "#futureWork" %>
+                  </li>
+                </ul>
+              </div>
 
-
-    <%= yield %>
-
-
-    <footer class="footer footer-black footer-big">
-      <div class="container">
-        <div class="content">
-          <div class="row">
-            <div class="col-md-3">
-              <a href="/" class="copyright pull-center">
-                <span style="font-size: 32px;">
-                  <span style="color:#FFF;">Uber</span>
-                  <span style="color:#0F0;">Eats</span>
-                </span>
-              </a>
-            </div>
-            <div class="col-md-3">
-              <h5>About Uber Eats</h5>
-              <ul class="links-vertical">
-                <li>
-                  <a href="#futureWork">
-                    Read our Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Buy Gift Cards
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Create a business account
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Add your restaurant
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Sign up to deliver
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-3">
-              <h5>Get Help</h5>
-              <ul class="links-vertical">
-                <li>
-                  <a href="#futureWork">
-                    View all cities
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    View all countries
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Restaurant near me
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Save on your first order
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    English
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div class="col-md-3">
-              <h5>Follow Us</h5>
-              <ul class="social-buttons">
-                <li>
-                  <a href="#futureWork" class="btn btn-just-icon btn-link btn-twitter">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork" class="btn btn-just-icon btn-link btn-facebook">
-                    <i class="fa fa-facebook-square"></i>
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork" class="btn btn-just-icon btn-link btn-instagram">
-                    <i class="fa fa-instagram"></i>
-                  </a>
-                </li>
-              </ul>
-              <ul class="links-vertical">
-                <li>
-                  <a href="#futureWork">
-                    Privacy Policies
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Terms
-                  </a>
-                </li>
-                <li>
-                  <a href="#futureWork">
-                    Pricing
-                  </a>
-                </li>
-              </ul>
+              <div class="col-md-3">
+                <h5>Follow Us</h5>
+                <ul class="social-buttons">
+                  <li>
+                    <a href="#futureWork" class="btn btn-just-icon btn-link btn-twitter">
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#futureWork" class="btn btn-just-icon btn-link btn-facebook">
+                      <i class="fa fa-facebook-square"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#futureWork" class="btn btn-just-icon btn-link btn-instagram">
+                      <i class="fa fa-instagram"></i>
+                    </a>
+                  </li>
+                </ul>
+                <ul class="links-vertical">
+                  <li>
+                    <%= link_to "Privacy Policies", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Terms", "#futureWork" %>
+                  </li>
+                  <li>
+                    <%= link_to "Pricing", "#futureWork" %>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+          <hr>
+          <div class="copyright pull-center">
+            Copyright &#xA9; Shubhank Singhal All Rights Reserved.
+          </div>
         </div>
-        <hr>
-        <div class="copyright pull-center">
-          Copyright &#xA9; Shubhank Singhal All Rights Reserved.
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </body>
 </html>

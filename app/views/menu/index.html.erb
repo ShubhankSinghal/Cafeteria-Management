@@ -1,94 +1,106 @@
 <div class="shopping-cart sidebar-collapse">
   <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
-    </div>
-      <div class="main main-raised">
-        <div class="card card-plain">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-9">
-                <h3 class="card-title text-center">Menu</h3>
-                <div class="table-responsive">
-                  <table class="table table-shopping">
-                    <thead>
-                      <tr>
-                        <th class="text-center"></th>
-                        <th>Item</th>
-                        <th class="text-right">Price</th>
-                        <th class="text-right"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="img-container">
-                            <img src="#" alt="future work">
-                          </div>
-                        </td>
-                        <td class="td-name">
-                          Shahi Paneer
-                          <br />
-                          <small>by Cafeteria</small>
-                        </td>
-                        <td class="td-number text-right">
-                          <small>&#8377;</small>200
-                        </td>
+  </div>
+  <div class="main main-raised">
+    <div class="card card-plain">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-9">
+            <br>
+
+            <h1 class="card-title text-center">Menu</h1>
+            <% MenuCategory.all.each do |category| %>
+
+              <div class="table-responsive">
+                <h3 class="text-center"><small><%= category.name.upcase %></small></h3>
+                <table class="table table-shopping">
+                  <thead>
+                    <tr class="text-center">
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Price</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% index = 0 %>
+                    <% MenuItem.where(menu_category_id: category.id, status: true).each do |menu| %>
+                      <tr class="text-center">
+                        <td><%= index %></td>
+                        <td><%= menu.name %></td>
+                        <td><%= menu.description %></td>
+                        <td><%= menu.price %></td>
                         <td class="td-number">
-                          <%  %>
+
+                          <% temp = OrderItem.where(menu_item_id: "menu.id").count %>
+                          <% if temp == 0 %>
                             <button class="btn btn-round btn-info"> Add </button>
-                          <%  %>
-                            1
+                          <% else %>
+                            <%= temp %>
                             <div class="btn-group btn-group-sm">
                               <button class="btn btn-round btn-info"> <i class="material-icons">remove</i> </button>
                               <button class="btn btn-round btn-info"> <i class="material-icons">add</i> </button>
                             </div>
-                          <%  %>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="col-md-3 border-left">
-                <h4 class="card-title text-center">Shopping Cart</h4>
-                <div class="table-responsive">
-                  <table class="table table-shopping">
-                    <thead>
-                      <tr>
-                        <th class="col-md-4">Item-Name</th>
-                        <th class="col-md-2">Quantity</th>
-                        <th class="col-md-6" colspan="2">Total Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="text-center">
-                        <td class="col-md-4">Shahi Paneer</td>
-                        <td class="col-md-2">4</td>
-                        <td class="col-md-4"><small>&#8377;</small>
-                          1000
-                        </td>
-                        <td class="col-md-2">
-                          <%= form_with(url: "/", method: "delete") do %>
-                            <button type="submit" class="btn btn-link">
-                              <i class="material-icons">close</i>
-                            </button>
                           <% end %>
+
                         </td>
                       </tr>
-                    </tbody>
-                    <tfoot class="card-title">
-                      <tr>
-                        <td colspan="2" class="text-right">
-                          Total Amount =
-                        </td>
-                        <td class="text-left">
-                          &#8377;10000
-                        </td>
-                        <td></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+                    <% end %>
+
+                  </tbody>
+                </table>
               </div>
+              <hr/>
+            <% end %>
+
+          </div>
+          <div class="col-md-3 border-left">
+            <h4 class="card-title text-center">Shopping Cart</h4>
+            <div class="table-responsive">
+              <table class="table table-shopping">
+                <thead>
+                  <tr>
+                    <th class="col-md-4">Item-Name</th>
+                    <th class="col-md-2">Quantity</th>
+                    <th class="col-md-6" colspan="2">Total Amount</th>
+                  </tr>
+                </thead>
+
+                <% total = 0 %>
+                <% OrderItem.all.group(:id).each do |order| %>
+                  <tbody>
+                    <tr class="text-center">
+                      <td class="col-md-4"><%= order.first.menu_item_name %></td>
+                      <td class="col-md-2"><%= order.count %></td>
+                      <td class="col-md-4"><small>&#8377;</small>
+                        <%= order.price.sum %>
+                        <% total += order.price.sum %>
+                      </td>
+                      <td class="col-md-2">
+                        <%= form_with(url: "/order/#{order.id}", method: "delete") do %>
+                          <button type="submit" class="btn btn-link">
+                            <i class="material-icons">close</i>
+                          </button>
+                        <% end %>
+                      </td>
+                    </tr>
+                  </tbody>
+                <% end %>
+
+                <tfoot class="card-title">
+                  <tr>
+                    <td colspan="2" class="text-right">
+                      Total Amount =
+                    </td>
+                    <td class="text-left">
+                      &#8377; <%= total %>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
           </div>
         </div>

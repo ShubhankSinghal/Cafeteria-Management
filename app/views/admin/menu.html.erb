@@ -1,55 +1,67 @@
 <div class="shopping-cart sidebar-collapse">
-<div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
-    </div>
-      <div class="main main-raised">
-        <div class="card card-plain">
-          <div class="card-body">
-            <div class="row justify-content-center">
-              <div class="col-md-10">
-              <br>
-                <h1 class="card-title text-center">Menu</h1>
-                <div class="table-responsive">
-                  <table class="table table-shopping">
-                    <thead>
-                      <tr>
-                        <th class="text-center"></th>
-                        <th>Item</th>
-                        <th class="text-right">Price</th>
-                        <th class="text-right"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="img-container">
-                            <img src="#" alt="future work">
-                          </div>
-                        </td>
-                        <td class="td-name">
-                          Shahi Paneer
-                          <br />
-                          <small>by Cafeteria</small>
-                        </td>
-                        <td class="td-number text-right">
-                          <small>&#8377;</small>200
-                        </td>
-                        <td class="td-number">
-                          <%  %>
-                            <button class="btn btn-round btn-info"> Add </button>
-                          <%  %>
-                            1
-                            <div class="btn-group btn-group-sm">
-                              <button class="btn btn-round btn-info"> <i class="material-icons">remove</i> </button>
-                              <button class="btn btn-round btn-info"> <i class="material-icons">add</i> </button>
-                            </div>
-                          <%  %>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+  <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
+  </div>
+  <div class="main main-raised">
+    <div class="card card-plain">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+          <br>
+            <h1 class="card-title text-center">Menu</h1>
+
+
+            <% MenuCategory.all.each do |category| %>
+            <div class="table-responsive">
+              <div class="row">
+                <h3 class="text-left col-md-6"><small><%= category.name.upcase %></small></h3>
+                <h3 class="text-right col-md-6">
+                  <%= form_with(url: "/addMenu/", method: "post") do %>
+                    <button onclick="this.form.submit()" class="btn btn-danger btn-link">
+                      <i class="material-icons">add</i>
+                    </button>
+                  <% end %>
+                </h3>
               </div>
-            </div>
+              <table class="table table-shopping">
+                      <thead>
+                        <tr class="text-center">
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Description</th>
+                          <th>Price</th>
+                          <th class="text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <% MenuItem.where(menu_category_id: category.id).each do |menu| %>
+                        <tr class="text-center">
+                          <td><%= menu.id %></td>
+                          <td><%= menu.name %></td>
+                          <td><%= menu.description %></td>
+                          <td><%= menu.price %></td>
+                          <td class="td-actions text-right">
+                          <%= form_with(url: "/updateMenuStatus/#{menu.id}", method: "put") do %>
+                              <%= label_tag(:status, "Status") %> &nbsp;
+                            <%= check_box_tag(:status, menu.status ? 0 : 1, menu.status, class: "btn btn-link togglebutton", :onclick => "this.form.submit()") %>
+                          <% end %>
+                          <div class="btn-group">
+                            <a href="/editMenu/<%= menu.id %>" rel="tooltip" class="btn btn-success btn-link btn-just-icon btn-sm">
+                              <i class="material-icons">edit</i>
+                            </a>
+                            <%= form_with(url: "/deleteMenu/#{menu.id}", method: "delete") do %>
+                              <button onclick="this.form.submit()" class="btn btn-danger btn-link">
+                                <i class="material-icons">delete</i>
+                              </button>
+                            <% end %>
+                          </div>
+                          </td>
+                        </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                  <hr/>
+            <% end %>
           </div>
         </div>
       </div>

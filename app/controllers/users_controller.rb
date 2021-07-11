@@ -1,21 +1,15 @@
 class UsersController < ApplicationController
   before_action :sign_page
 
-  def new
-    render "users/new"
+  def signinpage
+    render "signin"
   end
 
-  def index
-    render plain: User.order("id").map { |user| user }
+  def signuppage
+    render "signup"
   end
 
-  def show
-    id = params[:id]
-    user = User.find(id)
-    render plain: user.to_pleasant_string
-  end
-
-  def create
+  def signup
     user = User.new(
       first_name: params[:first_name],
       last_name: params[:last_name],
@@ -28,7 +22,18 @@ class UsersController < ApplicationController
       redirect_to "/"
     else
       flash[:error] = user.errors.full_messages.join(", ")
-      redirect_to "/users/new"
+      redirect_to new_user_path
+    end
+  end
+
+  def signin
+    user = User.find_by(email: params[:email])
+    if user && user.authenticate(params[:password])
+      session[:current_user_id] = user.id
+      redirect_to "/"
+    else
+      flash[:error] = "Your login attempt was invalid. Please retry."
+      redirect_to new_sessions_path
     end
   end
 end
