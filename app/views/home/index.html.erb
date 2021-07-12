@@ -14,7 +14,7 @@
 
             <h1 class="title">Welcome <%= @current_user.first_name %>!</h1>
             <br>
-            <%= link_to "Manage Users", "/list", class: "btn btn-danger btn-raised btn-round btn-lg" %>
+            <%= link_to "Manage Users", admin_users_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
             <br/> <br/>
             <%= link_to "Manage Menu", "/admin/menu", class: "btn btn-danger btn-raised btn-round btn-lg" %>
 

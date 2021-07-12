@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post "/signin" => "users#signin", as: :sessions
   get "/signup" => "users#signuppage", as: :new_user
   post "/signup" => "users#signup", as: :users
+  resources :admin_users
 
   get "/checkout" => "orders#checkout"
 

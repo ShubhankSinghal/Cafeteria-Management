@@ -1,52 +1,66 @@
 <div class="shopping-cart sidebar-collapse">
-<div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
-    </div>
-      <div class="main main-raised">
-        <div class="card card-plain">
-          <div class="card-body">
-            <div class="row justify-content-center">
-              <div class="col-lg-10 col-md-10">
-              <br>
-              <h1 class="card-title text-center">Users</h1>
+  <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
+  </div>
+  <div class="main main-raised">
+    <div class="card card-plain">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-md-10">
+            <br>
+            <h1 class="card-title text-center">Users</h1>
 
-                <% arr = ["owner", "clerk", "customer"] %>
-                <% for x in arr %>
-                  <% users = User.where(:role => x) %>
+            <% arr = ["owner", "clerk", "customer"] %>
+            <% for x in arr %>
+              <% users = User.where(:role => x) %>
 
                 <div class="table-responsive">
                   <h4 class="text-center"><small><%= x.upcase %></small></h4>
-                    <table class="table table-shopping">
-                      <thead>
-                        <tr class="text-center">
-                          <th>ID</th>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Email</th>
-                          <th>Since</th>
-                          <th class="text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                  <table class="table table-shopping">
+                    <thead>
+                      <tr class="text-center">
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Since</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <% index = 1 %>
                       <% users.each do |user| %>
                         <tr class="text-center">
-                          <td><%= user.id %></td>
-                          <td><%= user.first_name %></td>
-                          <td><%= user.last_name %></td>
-                          <td><%= user.email %></td>
-                          <td><%= user.created_at.to_s(:short) %></td>
-                          <td class="td-actions text-right">
-                            <a href="/change/<%= user.id %>" rel="tooltip" class="btn btn-success btn-link btn-just-icon btn-sm">
-                              <i class="material-icons">edit</i>
-                            </a>
-                          </td>
+                          <%= form_with(url: "/admin_users/#{user.id}", method: "put", class: "form-container") do |form| %>
+                            <td><%= index %></td>
+                                <% index += 1 %>
+                            <td>
+                              <%= form.text_field :first_name, class: "form-control", autofocus: true, placeholder: "First Name...", value: user.first_name %>
+                            </td>
+                            <td>
+                              <%= form.text_field :last_name, class: "form-control", placeholder: "Last Name...", value: user.last_name %>
+                            </td>
+                            <td>
+                              <%= form.email_field :email, class: "form-control", placeholder: "Email...", value: user.email %>
+                            </td>
+                            <td>
+                              <% cat = ["owner", "clerk", "customer"]
+                                 int_cat = cat.find_index(user.role) %>
+                              <%= select_tag(:role, options_for_select([["owner", 0], ["clerk", 1], ["customer", 2]], int_cat), class: "btn btn-link") %>
+                            </td>
+                            <td><%= user.created_at.to_s(:short) %></td>
+                            <td class="td-actions">
+                              <%= form.submit "update", class: "btn btn-success btn-link" %>
+                            </td>
+                          <% end %>
                         </tr>
-                        <% end %>
-                      </tbody>
-                    </table>
-                  </div>
-                  <hr/>
-                <% end %>
-              </div>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+                <hr/>
+              <% end %>
             </div>
           </div>
         </div>
@@ -55,5 +69,28 @@
   </div>
 </div>
 <li class="btn btn-link nav-link">
-  <%= link_to "Add new user", "new", method: "get", class: "btn  btn-rose btn-round btn-block" %>
+  <button class="btn btn-rose btn-round btn-block" onclick="openForm1()">Add new user</button>
 </li>
+
+<div id="new" class="form col-md-6 justify-content-center">
+  <%= form_with(url: admin_users_path, method: "post") do |form| %>
+    <%= form.text_field :first_name, class: "form-control", autofocus: true, placeholder: "First Name..." %>
+    <%= form.text_field :last_name, class: "form-control", placeholder: "Last Name..." %>
+    <%= form.email_field :email, class: "form-control", placeholder: "Email..." %>
+    <%= form.password_field :password, class: "form-control", placeholder: "Password..." %>
+    <%= select_tag(:role, options_for_select([["owner", 0], ["clerk", 1]], 0), class: "btn btn-primary") %>
+    <%= form.submit "Add User", class: "btn btn-rose btn-round" %>
+  <% end %>
+  <button class="btn btn-rose btn-round btn-block" onclick="closeForm1()">Close</button>
+</div>
+
+<script>
+  document.getElementById("new").style.display = "none";
+  function openForm1() {
+    document.getElementById("new").style.display = "block";
+  }
+
+  function closeForm1() {
+    document.getElementById("new").style.display = "none";
+  }
+</script>
