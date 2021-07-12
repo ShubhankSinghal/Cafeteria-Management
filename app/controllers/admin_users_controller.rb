@@ -25,10 +25,18 @@ class AdminUsersController < ApplicationController
     cat = ["owner", "clerk", "customer"]
     id = params[:id]
     user = User.find(id)
-    user.first_name = params[:first_name]
-    user.last_name = params[:last_name]
-    user.email = params[:email]
-    user.role = cat[params[:role].to_i]
+    if params[:first_name]
+      user.first_name = params[:first_name]
+    end
+    if params[:last_name]
+      user.last_name = params[:last_name]
+    end
+    if params[:email]
+      user.email = params[:email]
+    end
+    if params[:role]
+      user.role = cat[params[:role].to_i]
+    end
     unless user.save
       flash[:error] = user.errors.full_messages.join(", ")
     end

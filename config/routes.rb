@@ -11,18 +11,10 @@ Rails.application.routes.draw do
   post "/signup" => "users#signup", as: :users
   resources :admin_users
 
-  get "/checkout" => "orders#checkout"
-
-  resources :menu
   get "/history" => "menu#history"
+  get "/menu" => "menu#index", as: :menu_index
+  resources :admin_menu
+  resources :admin_menu_category
 
-  get "/list" => "admin#list"
-  get "/change/:id" => "admin#change"
-  get "/new" => "admin#new"
-  get "/admin/menu" => "admin#menu"
-  get "/editMenu/:id" => "admin#editMenu"
-  put "/updateMenu/:id" => "admin#updateMenu"
-  put "/updateMenuStatus/:id" => "admin#updateMenuStatus"
-  delete "/deleteMenu/:id" => "admin#deleteMenu"
-  resources :admin
+  get "/checkout" => "orders#checkout"
 end

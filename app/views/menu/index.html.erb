@@ -9,7 +9,7 @@
             <br>
 
             <h1 class="card-title text-center">Menu</h1>
-            <% MenuCategory.all.each do |category| %>
+            <% MenuCategory.where(status: true).each do |category| %>
 
               <div class="table-responsive">
                 <h3 class="text-center"><small><%= category.name.upcase %></small></h3>
@@ -23,16 +23,17 @@
                       <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
 
-                    <% index = 0 %>
+                  <tbody>
+                    <% index = 1 %>
                     <% MenuItem.where(menu_category_id: category.id, status: true).each do |menu| %>
                       <tr class="text-center">
                         <td><%= index %></td>
+                            <% index += 1 %>
                         <td><%= menu.name %></td>
                         <td><%= menu.description %></td>
                         <td><%= menu.price %></td>
-                        <td class="td-number">
+                        <td class="td-number text-center">
 
                           <% temp = OrderItem.where(menu_item_id: "menu.id").count %>
                           <% if temp == 0 %>

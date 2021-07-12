@@ -6,61 +6,136 @@
       <div class="card-body">
         <div class="row justify-content-center">
           <div class="col-md-10">
-          <br>
+            <br>
             <h1 class="card-title text-center">Menu</h1>
 
+            <% opt = []
+               MenuCategory.all.each do |cat|
+                 opt << [cat.name, cat.id]
+               end %>
 
             <% MenuCategory.all.each do |category| %>
-            <div class="table-responsive">
-              <div class="row">
-                <h3 class="text-left col-md-6"><small><%= category.name.upcase %></small></h3>
-                <h3 class="text-right col-md-6">
-                  <%= form_with(url: "/addMenu/", method: "post") do %>
-                    <button onclick="this.form.submit()" class="btn btn-danger btn-link">
-                      <i class="material-icons">add</i>
-                    </button>
-                  <% end %>
-                </h3>
-              </div>
-              <table class="table table-shopping">
-                      <thead>
-                        <tr class="text-center">
-                          <th>ID</th>
-                          <th>Name</th>
-                          <th>Description</th>
-                          <th>Price</th>
-                          <th class="text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      <% MenuItem.where(menu_category_id: category.id).each do |menu| %>
-                        <tr class="text-center">
-                          <td><%= menu.id %></td>
-                          <td><%= menu.name %></td>
-                          <td><%= menu.description %></td>
-                          <td><%= menu.price %></td>
-                          <td class="td-actions text-right">
-                          <%= form_with(url: "/updateMenuStatus/#{menu.id}", method: "put") do %>
-                              <%= label_tag(:status, "Status") %> &nbsp;
+              <div class="table-responsive">
+                <div class="row">
+
+                  <tr class="text-center">
+                    <div class="col-md-9">
+                      <%= form_with(url: "/admin_menu_category/#{category.id}", method: "put") do |form| %>
+                        <%= label_tag(:status, "Status") %> &nbsp;
+                        <%= check_box_tag(:status, !category.status, category.status, class: "btn btn-link togglebutton", :onclick => "this.form.submit()") %>
+                      <% end %>
+                      <%= form_with(url: "/admin_menu_category/#{category.id}", method: "put") do |form| %>
+                        <%= form.text_field :name, class: "form-control", value: category.name.upcase %>
+                    </div>
+
+                    <td class="td-actions">
+                      <div class="btn-group">
+
+                        <button onclick="this.form.submit()" class="btn btn-success btn-link">
+                          <i class="material-icons">save</i>
+                        </button>
+                      <% end %>
+
+                        <button onclick="<%= "categoryOpen#{category.id}()" %> " class="btn btn-primary btn-link">
+                          <i class="material-icons">add</i>
+                        </button>
+
+                        <%= form_with(url: "/admin_menu_category/#{category.id}", method: "delete") do %>
+                          <button onclick="this.form.submit()" class="btn btn-danger btn-link">
+                            <i class="material-icons">delete</i>
+                          </button>
+                        <% end %>
+
+                      </div>
+                    </td>
+                  </tr>
+                </div>
+
+                <table class="table table-shopping">
+                  <thead>
+                    <tr class="text-center">
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Price</th>
+                      <th>Category</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% index = 1 %>
+                    <% MenuItem.where(menu_category_id: category.id).each do |menu| %>
+                      <tr class="text-center">
+
+                        <%= form_with(url: "/admin_menu/#{menu.id}", method: "put") do |form| %>
+                          <td><%= index %></td>
+                          <% index += 1 %>
+                          <td>
+                            <%= form.text_field :name, class: "form-control", value: menu.name %>
+                          </td>
+                          <td>
+                            <%= form.text_field :description, class: "form-control", value: menu.description %>
+                          </td>
+                          <td>
+                            <%= form.text_field :price, class: "form-control", value: menu.price %>
+                          </td>
+                          <td>
+                            <%= select_tag(:menu_category_id, options_for_select(
+                                  opt, category.id
+                                ), class: "btn btn-link") %>
+                          </td>
+                          <td class="td-actions">
+                            <div class="btn-group">
+
+                              <button onclick="this.form.submit()" class="btn btn-success btn-link btn-just-icon btn-sm">
+                                <i class="material-icons">save</i>
+                              </button>
+                        <% end %>
+
+                          <%= form_with(url: "/admin_menu/#{menu.id}", method: "delete") do %>
+                            <button onclick="this.form.submit()" class="btn btn-danger btn-link">
+                              <i class="material-icons">delete</i>
+                            </button>
+                          <% end %>
+
+                          <%= form_with(url: "/admin_menu/#{menu.id}", method: "put") do %>
+                            <%= label_tag(:status, "Status") %> &nbsp;
                             <%= check_box_tag(:status, menu.status ? 0 : 1, menu.status, class: "btn btn-link togglebutton", :onclick => "this.form.submit()") %>
                           <% end %>
-                          <div class="btn-group">
-                            <a href="/editMenu/<%= menu.id %>" rel="tooltip" class="btn btn-success btn-link btn-just-icon btn-sm">
-                              <i class="material-icons">edit</i>
-                            </a>
-                            <%= form_with(url: "/deleteMenu/#{menu.id}", method: "delete") do %>
-                              <button onclick="this.form.submit()" class="btn btn-danger btn-link">
-                                <i class="material-icons">delete</i>
-                              </button>
-                            <% end %>
                           </div>
-                          </td>
-                        </tr>
-                        <% end %>
-                      </tbody>
-                    </table>
-                  </div>
-                  <hr/>
+                        </td>
+                      </tr>
+                    <% end %>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <div id=<%= category.id.to_s %> class="form col-md-6 justify-content-center">
+                <%= form_with(url: admin_menu_index_path, method: "post") do |form| %>
+                  <%= form.text_field :name, class: "form-control", autofocus: true, placeholder: "Enter item name" %>
+                  <%= form.text_field :description, class: "form-control", placeholder: "Enter description" %>
+                  <%= form.text_field :price, class: "form-control", placeholder: "Enter item price" %>
+                  <%= select_tag(:menu_category_id, options_for_select(
+                        opt, category.id
+                      ), class: "btn btn-round btn-link") %>
+                  <%= form.submit "Add Item", class: "btn btn-rose btn-round" %>
+                <% end %>
+                <button class="btn btn-rose btn-round btn-block" onclick="<%= "categoryClose#{category.id}()" %> ">Close</button>
+              </div>
+
+              <script>
+                document.getElementById(<%= category.id.to_s %>).style.display = "none";
+                function <%= "categoryOpen#{category.id}()" %> {
+                  document.getElementById(<%= category.id.to_s %>).style.display = "block";
+                }
+
+                function <%= "categoryClose#{category.id}()" %> {
+                  document.getElementById(<%= category.id.to_s %>).style.display = "none";
+                }
+              </script>
+              <hr/>
             <% end %>
           </div>
         </div>
@@ -68,3 +143,34 @@
     </div>
   </div>
 </div>
+<li class="btn btn-link nav-link">
+  <button class="btn btn-rose btn-round btn-block" onclick="openForm()">Add new category</button>
+</li>
+
+<div id="newCategory" class="form col-md-6 justify-content-center">
+  <%= form_with(url: admin_menu_category_index_path, method: "post") do |form| %>
+    <%= form.text_field :name, class: "form-control", autofocus: true, placeholder: "Enter new category name..." %>
+    <%= form.submit "Add Category", class: "btn btn-rose btn-round" %>
+  <% end %>
+  <button class="btn btn-rose btn-round btn-block" onclick="closeForm()">Close</button>
+</div>
+
+<script>
+  document.getElementById("newCategory").style.display = "none";
+  function openForm() {
+    document.getElementById("newCategory").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("newCategory").style.display = "none";
+  }
+</script>
+
+ <script>
+  document.getElementById("name").addEventListener('keyup', function(event) {
+    if(event.code === 'Enter') {
+      event.prevetnDefault();
+      document.querySelector('form').submit();
+    }
+  })
+</script>

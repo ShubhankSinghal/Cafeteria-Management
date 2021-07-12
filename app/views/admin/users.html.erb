@@ -36,7 +36,7 @@
                             <td><%= index %></td>
                                 <% index += 1 %>
                             <td>
-                              <%= form.text_field :first_name, class: "form-control", autofocus: true, placeholder: "First Name...", value: user.first_name %>
+                              <%= form.text_field :first_name, class: "form-control", placeholder: "First Name...", value: user.first_name %>
                             </td>
                             <td>
                               <%= form.text_field :last_name, class: "form-control", placeholder: "Last Name...", value: user.last_name %>
@@ -51,7 +51,9 @@
                             </td>
                             <td><%= user.created_at.to_s(:short) %></td>
                             <td class="td-actions">
-                              <%= form.submit "update", class: "btn btn-success btn-link" %>
+                              <button onclick="this.form.submit()" class="btn btn-success btn-link">
+                                <i class="material-icons">save</i>
+                              </button>
                             </td>
                           <% end %>
                         </tr>
@@ -72,25 +74,25 @@
   <button class="btn btn-rose btn-round btn-block" onclick="openForm1()">Add new user</button>
 </li>
 
-<div id="new" class="form col-md-6 justify-content-center">
+<div id="newUser" class="form col-md-6 justify-content-center">
   <%= form_with(url: admin_users_path, method: "post") do |form| %>
     <%= form.text_field :first_name, class: "form-control", autofocus: true, placeholder: "First Name..." %>
     <%= form.text_field :last_name, class: "form-control", placeholder: "Last Name..." %>
     <%= form.email_field :email, class: "form-control", placeholder: "Email..." %>
     <%= form.password_field :password, class: "form-control", placeholder: "Password..." %>
-    <%= select_tag(:role, options_for_select([["owner", 0], ["clerk", 1]], 0), class: "btn btn-primary") %>
+    <%= select_tag(:role, options_for_select([["owner", 0], ["clerk", 1]], 0), class: "btn btn-link") %>
     <%= form.submit "Add User", class: "btn btn-rose btn-round" %>
   <% end %>
   <button class="btn btn-rose btn-round btn-block" onclick="closeForm1()">Close</button>
 </div>
 
 <script>
-  document.getElementById("new").style.display = "none";
+  document.getElementById("newUser").style.display = "none";
   function openForm1() {
-    document.getElementById("new").style.display = "block";
+    document.getElementById("newUser").style.display = "block";
   }
 
   function closeForm1() {
-    document.getElementById("new").style.display = "none";
+    document.getElementById("newUser").style.display = "none";
   }
 </script>
