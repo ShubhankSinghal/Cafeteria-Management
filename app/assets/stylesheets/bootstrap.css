@@ -22672,7 +22672,7 @@ select.selectpicker {
     min-height: 400px;
   }
   .navbar-collapse {
-    position: fixed;
+    position: absolute;
     display: block;
     top: 0px;
     height: 100vh;
@@ -22681,7 +22681,7 @@ select.selectpicker {
     margin-right: 0 !important;
     z-index: 1032;
     visibility: visible;
-    background-color: #999;
+    background-color: #e91e63;
     overflow-y: visible;
     border-top: none;
     text-align: left;
@@ -22699,7 +22699,7 @@ select.selectpicker {
     height: 100%;
     width: 100%;
     position: absolute;
-    background-color: #fff;
+    background-color: #e91e63;
     display: block;
     content: "";
     z-index: 1;
