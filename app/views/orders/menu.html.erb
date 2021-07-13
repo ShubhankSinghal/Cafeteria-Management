@@ -1,6 +1,7 @@
 <div class="shopping-cart sidebar-collapse">
   <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
   </div>
+
   <div class="main main-raised">
     <div class="card card-plain">
       <div class="card-body">
@@ -11,51 +12,68 @@
             <h1 class="card-title text-center">Menu</h1>
             <% MenuCategory.where(status: true).each do |category| %>
 
-              <div class="table-responsive">
-                <h3 class="text-center"><small><%= category.name.upcase %></small></h3>
-                <table class="table table-shopping">
-                  <thead>
-                    <tr class="text-center">
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Price</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
+              <% menuItems = MenuItem.where(menu_category_id: category.id, status: true) %>
+              <% unless menuItems.count == 0 %>
 
-                  <tbody>
-                    <% index = 1 %>
-                    <% MenuItem.where(menu_category_id: category.id, status: true).each do |menu| %>
+                <div class="table-responsive">
+                  <h3 class="text-center"><small><%= category.name.upcase %></small></h3>
+                  <table class="table table-shopping">
+                    <thead>
                       <tr class="text-center">
-                        <td><%= index %></td>
-                            <% index += 1 %>
-                        <td><%= menu.name %></td>
-                        <td><%= menu.description %></td>
-                        <td><%= menu.price %></td>
-                        <td class="td-number text-center">
-
-                          <% temp = OrderItem.where(menu_item_id: "menu.id").count %>
-                          <% if temp == 0 %>
-                            <button class="btn btn-round btn-info"> Add </button>
-                          <% else %>
-                            <%= temp %>
-                            <div class="btn-group btn-group-sm">
-                              <button class="btn btn-round btn-info"> <i class="material-icons">remove</i> </button>
-                              <button class="btn btn-round btn-info"> <i class="material-icons">add</i> </button>
-                            </div>
-                          <% end %>
-
-                        </td>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
                       </tr>
-                    <% end %>
+                    </thead>
 
-                  </tbody>
-                </table>
-              </div>
-              <hr/>
+                    <tbody>
+                      <% index = 1 %>
+                      <% menuItems.each do |menu| %>
+
+                        <tr class="text-center">
+                          <td><%= index %></td>
+                              <% index += 1 %>
+                          <td><%= menu.name %></td>
+                          <td><%= menu.description %></td>
+                          <td><%= menu.price %></td>
+
+                          <td class="td-number text-center">
+
+                            <% orderItem = @order.order_items.where(menu_item_id: menu.id).first %>
+                            <% unless orderItem %>
+                              <%= form_with(url: order_items_path, method: "post") do |form| %>
+                                <%= form.hidden_field :order_id, value: @order.id %>
+                                <%= form.hidden_field :menu_item_id, value: menu.id %>
+                                <%= form.hidden_field :menu_item_name, value: menu.name %>
+                                <%= form.hidden_field :menu_item_price, value: menu.price %>
+                                <button type="submit" class="btn btn-link btn-info"> Add </button>
+                              <% end %>
+                            <% else %>
+                              <% puts "orderItem = #{orderItem}" %>
+                              <div class="btn-group btn-group-sm">
+                                <%= form_with(url: "/order_items/#{orderItem.id}", method: "put") do |form| %>
+                                  <%= form.hidden_field :menu_item_quantity, value: -1 %>
+                                  <button class="btn btn-link btn-info"> <i class="material-icons">remove</i> </button>
+                                <% end %>
+                                <%= orderItem.menu_item_quantity %>
+                                <%= form_with(url: "/order_items/#{orderItem.id}", method: "put") do |form| %>
+                                  <%= form.hidden_field :menu_item_quantity, value: 1 %>
+                                  <button class="btn btn-link btn-info"> <i class="material-icons">add</i> </button>
+                                <% end %>
+                              </div>
+                            <% end %>
+
+                          </td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+                <hr/>
+              <% end %>
             <% end %>
-
           </div>
           <div class="col-md-3 border-left">
             <h4 class="card-title text-center">Shopping Cart</h4>
@@ -70,17 +88,17 @@
                 </thead>
 
                 <% total = 0 %>
-                <% OrderItem.all.group(:id).each do |order| %>
+                <% @order.order_items.each do |order| %>
                   <tbody>
                     <tr class="text-center">
-                      <td class="col-md-4"><%= order.first.menu_item_name %></td>
-                      <td class="col-md-2"><%= order.count %></td>
+                      <td class="col-md-4"><%= order.menu_item_name %></td>
+                      <td class="col-md-2"><%= order.menu_item_quantity %></td>
                       <td class="col-md-4"><small>&#8377;</small>
-                        <%= order.price.sum %>
-                        <% total += order.price.sum %>
+                        <%= order.menu_item_price %>
+                        <% total += order.menu_item_price * order.menu_item_quantity %>
                       </td>
                       <td class="col-md-2">
-                        <%= form_with(url: "/order/#{order.id}", method: "delete") do %>
+                        <%= form_with(url: "/order_items/#{order.id}", method: "delete") do %>
                           <button type="submit" class="btn btn-link">
                             <i class="material-icons">close</i>
                           </button>
@@ -95,12 +113,12 @@
                     <td colspan="2" class="text-right">
                       Total Amount =
                     </td>
-                    <td class="text-left">
+                    <td class="text-left" colspan="2">
                       &#8377; <%= total %>
                     </td>
-                    <td></td>
                   </tr>
                 </tfoot>
+                <hr/>
               </table>
             </div>
           </div>

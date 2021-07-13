@@ -11,6 +11,7 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= favicon_pack_tag "logo.png" %>
 
     <%= stylesheet_link_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
     <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
@@ -46,7 +47,7 @@
 
               <% if @current_user %>
 
-                <% if request.original_fullpath == menu_index_path %>
+                <% if request.original_fullpath == menu_path %>
                   <li class="button-container nav-link iframe-extern">
                     <%= link_to "Checkout", "/checkout", method: "get", class: "btn  btn-rose btn-round btn-block" %>
                   </li>
