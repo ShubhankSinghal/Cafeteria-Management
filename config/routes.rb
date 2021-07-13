@@ -16,7 +16,6 @@ Rails.application.routes.draw do
 
   get "/menu" => "orders#index", as: :menu
   get "/history" => "orders#history", as: :history
-  get "/checkout" => "orders#checkout", as: :checkout
   resources :orders
   resources :order_items
 end

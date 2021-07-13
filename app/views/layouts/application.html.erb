@@ -49,7 +49,7 @@
 
                 <% if request.original_fullpath == menu_path %>
                   <li class="button-container nav-link iframe-extern">
-                    <%= link_to "Checkout", "/checkout", method: "get", class: "btn  btn-rose btn-round btn-block" %>
+                    <%= link_to "Checkout", order_items_path, method: "get", class: "btn  btn-rose btn-round btn-block" %>
                   </li>
                 <% end %>
 

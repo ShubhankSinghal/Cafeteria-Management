@@ -1,5 +1,17 @@
 class OrderItemsController < ApplicationController
   before_action :authenticate_user
+  before_action :get_order
+
+  def index
+    @order = @order.find_by(status: 0)
+    render "orders/checkout"
+  end
+
+  def show
+    order_id = params[:id]
+    @orderItem = OrderItem.where(order_id: order_id)
+    render "orders/singleOrder"
+  end
 
   def create
     orderItem = OrderItem.new(

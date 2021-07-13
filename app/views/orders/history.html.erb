@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
           <div class="col-lg-10 col-md-10">
             <br>
-            <h1 class="card-title text-center">Users</h1>
+            <h1 class="card-title text-center">Orders history</h1>
 
             <% arr = [:pending, :delivered] %>
             <% for x in arr %>
@@ -38,7 +38,7 @@
                         <% end %>
 
                         <tr class="text-center">
-                          <%= form_with(url: "/admin_users/#{order.id}", method: "put", class: "form-container") do |form| %>
+                          <%= form_with(url: "/order_items/#{order.id}", method: "get", class: "form-container") do |form| %>
                             <td><%= index %></td>
                                 <% index += 1 %>
                             <td>

@@ -23,11 +23,6 @@ class OrdersController < ApplicationController
     render "history"
   end
 
-  def checkout
-    @order = @order.find_by(status: 0)
-    render "checkout"
-  end
-
   def update
     id = params[:id]
     order = Order.find(id)

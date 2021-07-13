@@ -1,0 +1,72 @@
+<div class="shopping-cart sidebar-collapse">
+  <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
+  </div>
+
+  <div class="main main-raised">
+    <div class="card card-plain">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h3 class="card-title text-center">Previous order</h3>
+            <div class="table-responsive">
+
+              <table class="table table-shopping text-center">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+
+                <% total = 0 %>
+                <% index = 1 %>
+                <% @orderItem.each do |item| %>
+                  <tbody>
+                    <tr>
+                      <td >
+                        <%= index %>
+                        <% index += 1 %>
+                      </td>
+                      <td class="td-name">
+                        <%= item.menu_item_name %>
+                      </td>
+                      <td class="td-number text-center">
+                        <small>&#8377;</small>
+                        <%= price = item.menu_item_price %>
+                      </td>
+                      <td class="td-number text-center">
+                        <%= quantity = item.menu_item_quantity %>
+                      </div>
+                      </td>
+                      <td class="td-number text-center">
+                        <small>&#8377;</small>
+                        <%= price * quantity %>
+                        <% total += price * quantity %>
+                      </td>
+                    </tr>
+                  </tbody>
+                <% end %>
+
+                <tfoot class="text-center">
+                  <tr>
+                    <td colspan="3"></td>
+                    <td class="td-total text-center">
+                      Total
+                    </td>
+                    <td colspan="1" class="td-price text-center">
+                      <small>&#8377;</small>
+                      <%= total %>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
