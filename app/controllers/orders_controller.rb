@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :current_user
-  before_action :get_order
   before_action :authenticate_user
+  before_action :get_order
 
   def index
     @order = @order.find_by(status: 0)
