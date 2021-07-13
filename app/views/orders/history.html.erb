@@ -4,82 +4,70 @@
   <div class="main main-raised">
     <div class="card card-plain">
       <div class="card-body">
-        <div class="row">
-          <div class="col-md-12">
-            <h3 class="card-title text-center">Shopping Cart</h3>
-            <div class="table-responsive">
-              <table class="table table-shopping">
-                <thead>
-                  <tr>
-                    <th class="text-center">#</th>
-                    <th>Item</th>
-                    <th class="text-right">Price</th>
-                    <th class="text-right">Qty</th>
-                    <th class="text-right">Amount</th>
-                    <th></th>
-                  </tr>
-                </thead>
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-md-10">
+            <br>
+            <h1 class="card-title text-center">Users</h1>
 
-                <% total = 0 %>
-                <% index = 0 %>
-                <% OrderItem.all.group(:id).each do |order| %>
-                  <tbody>
-                    <tr>
-                      <td class="text-center">
-                        <%= index %>
-                        <% index += 1 %>
-                      </td>
-                      <td class="td-name">
-                        <%= order.first.name %>
-                      </td>
-                      <td class="td-number text-right">
-                        <small>&#8377;</small>
-                        <%= price = order.price.sum %>
-                        <%= price %>
-                      </td>
-                      <td class="td-number">
-                        <%= count = order.count %>
-                        <%= count %>
-                        <div class="btn-group btn-group-sm">
-                          <button class="btn btn-round btn-info"> <i class="material-icons">remove</i> </button>
-                          <button class="btn btn-round btn-info"> <i class="material-icons">add</i> </button>
-                        </div>
-                      </td>
-                      <td class="td-number">
-                        <small>&#8377;</small>
-                        <%= price * count %>
-                        <% total += price * count %>
-                      </td>
-                      <td class="td-actions">
-                        <%= form_with(url: "/order/#{order.id}", method: "delete") do %>
-                          <button type="submit" class="btn btn-link">
-                            <i class="material-icons">close</i>
-                          </button>
+            <% arr = [:pending, :delivered] %>
+            <% for x in arr %>
+              <% orders = @order.where(:status => x) %>
+
+                <div class="table-responsive">
+                  <h4 class="text-center card-title"><%= x.upcase %></h4>
+                  <table class="table table-shopping text-center">
+                    <thead>
+                      <tr class="text-center">
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <% if x == :delivered %>
+                          <th>Delivered</th>
                         <% end %>
-                      </td>
-                    </tr>
-                  </tbody>
-                <% end %>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                <tfoot>
-                  <tr>
-                    <td colspan="3"></td>
-                    <td class="td-total">
-                      Total
-                    </td>
-                    <td colspan="1" class="td-price">
-                      <small>&#8377;</small>
-                      <%= total %>
-                    </td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td colspan="6" class="text-center">
-                      <button type="button" class="btn btn-info btn-round">Confirm and place the order <i class="material-icons">keyboard_arrow_right</i></button>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+                      <% index = 1 %>
+                      <% orders.each do |order| %>
+                        <% total = 0 %>
+                        <% order.order_items.each do |orderItem| %>
+                          <% total += orderItem.menu_item_price.to_i * orderItem.menu_item_quantity.to_i %>
+                        <% end %>
+
+                        <tr class="text-center">
+                          <%= form_with(url: "/admin_users/#{order.id}", method: "put", class: "form-container") do |form| %>
+                            <td><%= index %></td>
+                                <% index += 1 %>
+                            <td>
+                              <%= order.date %>
+                            </td>
+                            <td>
+                              <%= total %>
+                            </td>
+                            <td>
+                              <%= x %>
+                            </td>
+                            <% if x == :delivered %>
+                              <td>
+                                <%= order.delivered_at %>
+                              </td>
+                            <% end %>
+                            <td class="td-actions">
+                              <button onclick="this.form.submit()" class="btn btn-success btn-link">
+                                <i class="material-icons">visibility</i>
+                              </button>
+                            </td>
+                          <% end %>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+                <hr/>
+              <% end %>
             </div>
           </div>
         </div>

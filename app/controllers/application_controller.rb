@@ -31,4 +31,8 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, notice: "You are not ADMIN" if request.original_fullpath != "/"
     end
   end
+
+  def get_order
+    @order = current_user.orders
+  end
 end

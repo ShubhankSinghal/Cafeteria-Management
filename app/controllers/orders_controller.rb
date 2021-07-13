@@ -1,9 +1,10 @@
 class OrdersController < ApplicationController
   before_action :current_user
+  before_action :get_order
   before_action :authenticate_user
 
   def index
-    @order = current_user.orders.find_by(status: 0)
+    @order = @order.find_by(status: 0)
     unless @order
       @order = Order.new(
         date: Date.today,
@@ -23,7 +24,7 @@ class OrdersController < ApplicationController
   end
 
   def checkout
-    @order = current_user.orders.find_by(status: 0)
+    @order = @order.find_by(status: 0)
     render "checkout"
   end
 
