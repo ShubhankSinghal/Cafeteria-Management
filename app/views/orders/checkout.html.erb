@@ -1,6 +1,7 @@
 <div class="shopping-cart sidebar-collapse">
   <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
   </div>
+
   <div class="main main-raised">
     <div class="card card-plain">
       <div class="card-body">
@@ -8,7 +9,8 @@
           <div class="col-md-12">
             <h3 class="card-title text-center">Shopping Cart</h3>
             <div class="table-responsive">
-              <table class="table table-shopping">
+
+              <table class="table table-shopping text-center">
                 <thead>
                   <tr>
                     <th class="text-center">#</th>
@@ -21,37 +23,41 @@
                 </thead>
 
                 <% total = 0 %>
-                <% index = 0 %>
-                <% OrderItem.all.group(:id).each do |order| %>
+                <% index = 1 %>
+                <% @order.order_items.each do |orderItem| %>
                   <tbody>
                     <tr>
-                      <td class="text-center">
+                      <td >
                         <%= index %>
                         <% index += 1 %>
                       </td>
                       <td class="td-name">
-                        <%= order.first.name %>
+                        <%= orderItem.menu_item_name %>
                       </td>
                       <td class="td-number text-right">
                         <small>&#8377;</small>
-                        <%= price = order.price.sum %>
-                        <%= price %>
+                        <%= price = orderItem.menu_item_price %>
                       </td>
                       <td class="td-number">
-                        <%= count = order.count %>
-                        <%= count %>
                         <div class="btn-group btn-group-sm">
-                          <button class="btn btn-round btn-info"> <i class="material-icons">remove</i> </button>
-                          <button class="btn btn-round btn-info"> <i class="material-icons">add</i> </button>
+                          <%= form_with(url: "/order_items/#{orderItem.id}", method: "put") do |form| %>
+                            <%= form.hidden_field :menu_item_quantity, value: -1 %>
+                            <button class="btn btn-link btn-info"> <i class="material-icons">remove</i> </button>
+                          <% end %>
+                          <%= quantity = orderItem.menu_item_quantity %>
+                          <%= form_with(url: "/order_items/#{orderItem.id}", method: "put") do |form| %>
+                            <%= form.hidden_field :menu_item_quantity, value: 1 %>
+                            <button class="btn btn-link btn-info"> <i class="material-icons">add</i> </button>
+                          <% end %>
                         </div>
                       </td>
                       <td class="td-number">
                         <small>&#8377;</small>
-                        <%= price * count %>
-                        <% total += price * count %>
+                        <%= price * quantity %>
+                        <% total += price * quantity %>
                       </td>
                       <td class="td-actions">
-                        <%= form_with(url: "/order/#{order.id}", method: "delete") do %>
+                        <%= form_with(url: "/order_items/#{orderItem.id}", method: "delete") do %>
                           <button type="submit" class="btn btn-link">
                             <i class="material-icons">close</i>
                           </button>
@@ -75,7 +81,9 @@
                   </tr>
                   <tr>
                     <td colspan="6" class="text-center">
-                      <button type="button" class="btn btn-info btn-round">Confirm and place the order <i class="material-icons">keyboard_arrow_right</i></button>
+                      <%= form_with(url: "/orders/#{@order.id}", method: "put") do %>
+                        <button type="submit" class="btn btn-info btn-round">Confirm and place the order <i class="material-icons">keyboard_arrow_right</i></button>
+                      <% end %>
                     </td>
                   </tr>
                 </tfoot>

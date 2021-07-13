@@ -23,19 +23,16 @@ class OrdersController < ApplicationController
   end
 
   def checkout
+    @order = current_user.orders.find_by(status: 0)
     render "checkout"
   end
 
-  def create
-    order = Order.new(
-      date: Date.today,
-      user_id: @current_user.id,
-      delivered_at: nil,
-      status: 0,
-    )
-    unless order.save
-      flash[:error] = order.errors.full_messages.join(", ")
-    end
-    redirect_to menu_path
+  def update
+    id = params[:id]
+    order = Order.find(id)
+    order.status = 1
+    order.date = Date.today
+    order.save
+    redirect_to root_path
   end
 end

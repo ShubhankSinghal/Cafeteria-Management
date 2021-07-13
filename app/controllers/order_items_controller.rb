@@ -18,9 +18,15 @@ class OrderItemsController < ApplicationController
   def update
     id = params[:id]
     orderItem = OrderItem.find(id)
-    orderItem.menu_item_quantity = orderItem.menu_item_quantity.to_i + params[:menu_item_quantity].to_i
-    unless orderItem.save
-      flash[:error] = orderItem.errors.full_messages.join(", ")
+    actual = orderItem.menu_item_quantity.to_i
+    update = params[:menu_item_quantity].to_i
+    unless actual == 1 and update == -1
+      orderItem.menu_item_quantity = actual + update
+      unless orderItem.save
+        flash[:error] = orderItem.errors.full_messages.join(", ")
+      end
+    else
+      orderItem.destroy
     end
     redirect_to menu_path
   end

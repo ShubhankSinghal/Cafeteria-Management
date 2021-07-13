@@ -51,7 +51,6 @@
                                 <button type="submit" class="btn btn-link btn-info"> Add </button>
                               <% end %>
                             <% else %>
-                              <% puts "orderItem = #{orderItem}" %>
                               <div class="btn-group btn-group-sm">
                                 <%= form_with(url: "/order_items/#{orderItem.id}", method: "put") do |form| %>
                                   <%= form.hidden_field :menu_item_quantity, value: -1 %>
@@ -94,7 +93,7 @@
                       <td class="col-md-4"><%= order.menu_item_name %></td>
                       <td class="col-md-2"><%= order.menu_item_quantity %></td>
                       <td class="col-md-4"><small>&#8377;</small>
-                        <%= order.menu_item_price %>
+                        <%= order.menu_item_price * order.menu_item_quantity %>
                         <% total += order.menu_item_price * order.menu_item_quantity %>
                       </td>
                       <td class="col-md-2">
