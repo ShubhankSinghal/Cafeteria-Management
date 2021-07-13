@@ -9,12 +9,14 @@ Rails.application.routes.draw do
   post "/signin" => "users#signin", as: :sessions
   get "/signup" => "users#signuppage", as: :new_user
   post "/signup" => "users#signup", as: :users
-  resources :admin_users
 
-  get "/history" => "menu#history"
-  get "/menu" => "menu#index", as: :menu_index
+  resources :admin_users
   resources :admin_menu
   resources :admin_menu_category
 
-  get "/checkout" => "orders#checkout"
+  get "/menu" => "orders#index", as: :menu
+  get "/history" => "orders#history", as: :history
+  get "/checkout" => "orders#checkout", as: :checkout
+  resources :orders
+  resources :order_items
 end
