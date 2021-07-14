@@ -7,7 +7,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-12">
-            <h3 class="card-title text-center">Previous order</h3>
+            <h3 class="card-title text-center">Order Preview</h3>
             <div class="table-responsive">
 
               <table class="table table-shopping text-center">
@@ -61,6 +61,15 @@
                       <%= total %>
                     </td>
                   </tr>
+                  <% if @current_user.role != "customer" %>
+                    <tr>
+                      <td colspan="6" class="text-center">
+                        <%= form_with(url: "/delivered/#{@order_id}", method: "put") do %>
+                          <button type="submit" class="btn btn-info btn-round"> Mark as delivered<i class="material-icons">keyboard_arrow_right</i></button>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
                 </tfoot>
               </table>
             </div>

@@ -10,26 +10,31 @@
             <div class="col-md-2 text-left"><%= link_to :"Sign in here!", new_sessions_path, class: "btn btn-rose btn-round btn-block" %></div>
             <br>
 
-          <% elsif @current_user.role == "owner" %>
-
-            <h1 class="title">Welcome <%= @current_user.first_name %>!</h1>
-            <br>
-            <%= link_to "Manage Users", admin_users_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
-            <br/> <br/>
-            <%= link_to "Manage Menu", admin_menu_index_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
-
           <% else %>
 
             <h1 class="title">Welcome <%= @current_user.first_name %>!</h1>
-            <h4>Well, what are you waiting for?</h4>
-            <h4>Click on the button below and get your food ordered...</h4>
-            <br/>
-            <%= link_to "Order now", menu_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
+            <br>
+
+            <% if @current_user.role == "owner" %>
+
+              <%= link_to "Manage Users", admin_users_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
+              <br/> <br/>
+              <%= link_to "Manage Menu", admin_menu_index_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
+              <br/> <br/>
+
+            <% end %>
+
+            <% if @current_user.role == "customer" %>
+              <h4>Well, what are you waiting for?</h4>
+              <h4>Click on the button below and get your food ordered...</h4>
+              <br/>
+            <% end %>
+
+            <%= link_to @current_user.role != "customer" ? "Place an Order" : "Order now", menu_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
             <br/> <br/>
-            <%= link_to "Check your orders", history_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
+            <%= link_to @current_user.role != "customer" ? "Update orders' status" : "Check your orders", history_path, class: "btn btn-danger btn-raised btn-round btn-lg" %>
 
           <% end %>
-
         </div>
       </div>
     </div>

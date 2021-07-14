@@ -1,4 +1,5 @@
 class OrderItemsController < ApplicationController
+  before_action :current_user
   before_action :authenticate_user
   before_action :get_order
 
@@ -8,8 +9,8 @@ class OrderItemsController < ApplicationController
   end
 
   def show
-    order_id = params[:id]
-    @orderItem = OrderItem.where(order_id: order_id)
+    @order_id = params[:id]
+    @orderItem = OrderItem.where(order_id: @order_id)
     render "orders/singleOrder"
   end
 

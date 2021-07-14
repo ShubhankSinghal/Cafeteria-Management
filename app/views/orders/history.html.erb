@@ -9,9 +9,9 @@
             <br>
             <h1 class="card-title text-center">Orders history</h1>
 
-            <% arr = [:pending, :delivered] %>
+            <% arr = @current_user.role == "customer" ? [:pending, :delivered] : [:pending] %>
             <% for x in arr %>
-              <% orders = @order.where(:status => x) %>
+              <% orders = @order.where(:status => x).order(:date) %>
 
                 <div class="table-responsive">
                   <h4 class="text-center card-title"><%= x.upcase %></h4>
@@ -21,7 +21,9 @@
                         <th>#</th>
                         <th>Date</th>
                         <th>Total Amount</th>
-                        <th>Status</th>
+                        <th>
+                          <%= @current_user.role == "customer" ? "Status" : "UserName" %>
+                        </th>
                         <% if x == :delivered %>
                           <th>Delivered</th>
                         <% end %>
@@ -38,29 +40,32 @@
                         <% end %>
 
                         <tr class="text-center">
-                          <%= form_with(url: "/order_items/#{order.id}", method: "get", class: "form-container") do |form| %>
-                            <td><%= index %></td>
-                                <% index += 1 %>
+                          <td><%= index %></td>
+                              <% index += 1 %>
+                          <td>
+                            <%= order.date %>
+                          </td>
+                          <td>
+                            <%= total %>
+                          </td>
+                          <td>
+                            <%= @current_user.role == "customer" ? x : User.find(order.user_id).first_name %>
+                          </td>
+                          <% if x == :delivered %>
                             <td>
-                              <%= order.date %>
-                            </td>
-                            <td>
-                              <%= total %>
-                            </td>
-                            <td>
-                              <%= x %>
-                            </td>
-                            <% if x == :delivered %>
-                              <td>
-                                <%= order.delivered_at %>
-                              </td>
-                            <% end %>
-                            <td class="td-actions">
-                              <button onclick="this.form.submit()" class="btn btn-success btn-link">
-                                <i class="material-icons">visibility</i>
-                              </button>
+                              <%= order.delivered_at %>
                             </td>
                           <% end %>
+                          <td class="td-actions">
+                            <%= form_with(url: "/order_items/#{order.id}", method: "get", class: "form-container") do |form| %>
+                              <button onclick="this.form.submit()" class="btn btn-success btn-link">
+                                <%= @current_user.role != "customer" ? "Mark as delivered" : "" %>
+                                <i class="material-icons">
+                                  <%= @current_user.role == "customer" ? "visibility" : "verified" %>
+                                </i>
+                              </button>
+                            <% end %>
+                          </td>
                         </tr>
                       <% end %>
                     </tbody>

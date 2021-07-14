@@ -31,4 +31,13 @@ class OrdersController < ApplicationController
     order.save
     redirect_to root_path
   end
+
+  def delivered
+    id = params[:id]
+    order = Order.find(id)
+    order.status = 2
+    order.delivered_at = Date.today
+    order.save
+    redirect_to history_path
+  end
 end

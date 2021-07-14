@@ -33,6 +33,10 @@ class ApplicationController < ActionController::Base
   end
 
   def get_order
-    @order = current_user.orders
+    unless @current_user.role == "customer"
+      @order = Order.all
+    else
+      @order = current_user.orders
+    end
   end
 end

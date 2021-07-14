@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get "/menu" => "orders#index", as: :menu
   get "/history" => "orders#history", as: :history
+  put "/delivered/:id" => "orders#delivered", as: :delivered
   resources :orders
   resources :order_items
 end
