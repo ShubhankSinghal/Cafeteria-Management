@@ -35,6 +35,8 @@ class ApplicationController < ActionController::Base
   def get_order
     unless @current_user.role == "customer"
       @order = Order.all
+      @offline = User.where(role: [:clerk, :owner])
+      @online = User.where(role: [:customer])
     else
       @order = current_user.orders
     end

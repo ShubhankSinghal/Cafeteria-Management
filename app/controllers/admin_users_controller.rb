@@ -1,9 +1,25 @@
 class AdminUsersController < ApplicationController
   before_action :current_user
   before_action :check_admin
+  before_action :get_order
 
   def index
     render "admin/users"
+  end
+
+  def report
+    if params[:from_date]
+      @from = params[:from_date]
+    else
+      @from = Date.today - 365
+    end
+    if params[:to_date]
+      @to = params[:to_date]
+    else
+      @to = Date.today
+    end
+    @order = @order.where(date: @from..@to)
+    render "admin/report"
   end
 
   def create

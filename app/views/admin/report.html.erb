@@ -1,0 +1,159 @@
+<div class="shopping-cart sidebar-collapse">
+  <div class="page-header header-filter shopping-background" data-parallax="true" filter-color="blue" style="height:120px">
+  </div>
+  <div class="main main-raised">
+    <div class="card card-plain">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-md-10">
+
+            <%= form_with(url: admin_report_path, method: "get", class: "form-container") do |form| %>
+              <div class="row">
+                <div class="col-md-5">
+                  <h1 class="card-title text-center">All Orders</h1>
+                </div>
+                <div class="form-group col-md-3">
+                  <%= label_tag("from_date", nil, class: "label-control") %>
+                  <%= date_field_tag("from_date", @from, class: "form-control datepicker") %>
+                </div>
+                <div class="form-group col-md-3">
+                  <%= label_tag("to_date", nil, class: "label-control") %>
+                  <%= date_field_tag("to_date", @to, class: "form-control datepicker") %>
+                </div>
+                <div class="col-md-1">
+                  <button onclick="this.form.submit()" class="btn btn-info btn-link">
+                    Click here
+                    <br/><i class="material-icons">filter</i><br/>
+                    to filter
+                  </button>
+                </div>
+              </div>
+            <% end %>
+            <br/><br/>
+
+            <div class="row">
+
+              <% allTotal = 0 %>
+              <% temp = [@offline, @online] %>
+
+              <% for user in temp %>
+
+                <% cat1Total = 0 %>
+                <div class="col-lg-6 col-md-6 border-left border-right">
+
+                  <h3 class="card-title text-center">
+                    <%= user.first.role == "customer" ? "Online" : "Offline" %>
+                  </h3>
+                  <hr/>
+
+                  <% for x in [:pending, :delivered] %>
+
+                    <% cat2Total = 0 %>
+                    <% orders = @order.where(user_id: user.ids, status: x).order(:date) %>
+
+                    <div class="table-responsive">
+                      <h4 class="text-center card-title"><%= x.upcase %></h4>
+
+                      <table class="table table-shopping text-center">
+                        <thead>
+                          <tr class="text-center">
+                            <th>#</th>
+                            <th>Date</th>
+                            <% if user.first.role == "customer" %>
+                              <th>UserName</th>
+                            <% end %>
+                            <th>Total Amount</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <% index = 1 %>
+                          <% orders.each do |order| %>
+
+                            <% total = 0 %>
+                            <% order.order_items.each do |orderItem| %>
+                              <% total += orderItem.menu_item_price.to_i * orderItem.menu_item_quantity.to_i %>
+                            <% end %>
+
+                            <tr class="text-center">
+                              <td><%= index %></td>
+                                  <% index += 1 %>
+                              <td>
+                                <%= order.date %>
+                              </td>
+                              <% if user.first.role == "customer" %>
+                                <td>
+                                  <%= order.user.first_name %>
+                                </td>
+                              <% end %>
+                              <td>
+                                <%= total %>
+                                <% cat2Total += total %>
+                              </td>
+                              <td class="td-actions">
+                                <%= form_with(url: "/order_items/#{order.id}", method: "get", class: "form-container") do |form| %>
+                                  <button onclick="this.form.submit()" class="btn btn-success btn-link">
+                                    <i class="material-icons">visibility</i>
+                                  </button>
+                                <% end %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+
+                        <tfoot class="text-center">
+                          <tr>
+                            <% if user.first.role == "customer" %>
+                              <td></td>
+                            <% end %>
+                            <td></td>
+                            <td class="td-total text-center">
+                              Total
+                            </td>
+                            <td colspan="1" class="td-price text-center">
+                              <small>
+                                &#8377;
+                                <%= cat2Total %>
+                                <% cat1Total += cat2Total %>
+                              </small>
+                            </td>
+                            <td></td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                    <hr/>
+                  <% end %>
+
+                  <h4 class="text-center">
+                      Total
+                      <%= user.first.role == "customer" ? "online" : "offline" %>
+                      amount =
+                      <small>
+                        &#8377;
+                      </small>
+                      <%= cat1Total %>
+                      <% allTotal += cat1Total %>
+                  </h4>
+                  <hr/>
+                </div>
+              <% end %>
+            </div>
+            <hr/>
+            <div>
+              <h3 class="text-center">
+                      Overall total amount =
+                      <small>
+                        &#8377;
+                      </small>
+                      <%= allTotal %>
+                  </h3>
+            </div>
+            <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :admin_users
   resources :admin_menu
   resources :admin_menu_category
+  get "/report" => "admin_users#report", as: :admin_report
 
   get "/menu" => "orders#index", as: :menu
   get "/history" => "orders#history", as: :history

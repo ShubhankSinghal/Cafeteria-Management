@@ -61,7 +61,7 @@
                       <%= total %>
                     </td>
                   </tr>
-                  <% if @current_user.role != "customer" %>
+                  <% if @current_user.role != "customer" and @orderItem.first.order.status == "pending" %>
                     <tr>
                       <td colspan="6" class="text-center">
                         <%= form_with(url: "/delivered/#{@order_id}", method: "put") do %>
